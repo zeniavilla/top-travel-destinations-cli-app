@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require './lib/top_travel_destinations'
+
+TopTravelDestinations::CLI.new.call
