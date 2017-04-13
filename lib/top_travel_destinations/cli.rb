@@ -4,10 +4,11 @@ class TopTravelDestinations::CLI
         list_destinations
         menu
     end
-
+    
     def list_destinations
         puts "Top Travel Destinations"
-        @destinations = TopTravelDestinations::Destination
+        @destinations = TopTravelDestinations::Destination.all
+        @destinations.each_with_index(1) {|destination, index| puts "#{index}. #{destination.location}"}
     end
 
     def menu

@@ -1,18 +1,18 @@
 class TopTravelDestinations::Destination
 
-    
+    attr_accessor :location, :description, :attractions, :attractions_url
+
+    @@all = []
+
+    def initialize(destination_hash)
+        destination_hash.each do |key, value|
+            self.send("#{key}=", value)
+        end
+        self.class.all << self
+    end
 
     def self.all
-        # puts <<-DOC.gsub /^\s*/, ''
-        # 1. Bali, Indonesia
-        # 2. London, United Kingdom
-        # 3. Paris, France
-        # 4. Rome, Italy
-        # 5. New York City, New York
-        # ...
-        # DOC
-
-
+        @@all
     end
 
 end
