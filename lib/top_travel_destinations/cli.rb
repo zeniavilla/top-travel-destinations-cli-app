@@ -7,14 +7,7 @@ class TopTravelDestinations::CLI
 
     def list_destinations
         puts "Top Travel Destinations"
-        puts <<-DOC.gsub /^\s*/, ''
-        1. Bali, Indonesia
-        2. London, United Kingdom
-        3. Paris, France
-        4. Rome, Italy
-        5. New York City, New York
-        ...
-        DOC
+        @destinations = TopTravelDestinations::Destination
     end
 
     def menu
@@ -24,7 +17,7 @@ class TopTravelDestinations::CLI
             input = gets.strip.downcase
             
             if input.to_i.between?(1, 25)
-                destination_details
+                destination_details[input.to_i]
             elsif input == "display"
                 list_by_continent
             elsif input == "exit"
