@@ -34,7 +34,7 @@ class TopTravelDestinations::CLI
             input = gets.strip.downcase
             
             if input.to_i.between?(1, 25)
-                destination_details[input.to_i - 1][:location]
+                destination_details(input.to_i - 1)
             elsif input == "display"
                 list_by_continent
             elsif input == "exit"
@@ -46,17 +46,15 @@ class TopTravelDestinations::CLI
         end
     end
 
-    def destination_details
-        puts <<-DOC.gsub /^\s*/, ''
-        [DESTINATION] Bali, Indonesia
-        ---
-        [DESCRIPTION] Why visit: Bali is a living postcard, an Indonesian paradise that feels like a fantasy. Soak up the sun on a stretch of fine white sand, or commune with the tropical creatures as you dive along coral ridges or the colorful wreck of a WWII war ship. On shore, the lush jungle shelters stone temples and mischievous monkeys. The “artistic capital” of Ubud is the perfect place to see a cultural dance performance, take a batik or silver-smithing workshop, or invigorate your mind and body in a yoga class.
-        [ATTRACTIONS]Don't miss:
-        1. Waterbom Bali
-        2. Mayong Village Tracking Experience
-        3. Tirta Gangga
-        [ALL ATTRACTIONS URL]Link to all [num] of things to do: https://www.tripadvisor.com/Attractions-g294226-Activities-Bali.html
-        DOC
+    def destination_details(input)
+        index = @destinations[input]
+        puts index.location
+        puts "---"
+        puts "Why visit? #{index.description}"
+        puts "Don't miss:"
+        index.attractions.each.with_index(1) {|attraction, i| puts "#{i}. #{attraction}"}
+        puts "Current lowest airfare: #{index.flight_price}"
+        puts "-----------"
     end
 
     def list_by_continent

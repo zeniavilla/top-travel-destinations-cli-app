@@ -1,5 +1,4 @@
 class TopTravelDestinations::Destination
-
     attr_accessor :location, :description, :destination_url, :attractions, :attractions_url, :flight_price
 
     @@all = []
