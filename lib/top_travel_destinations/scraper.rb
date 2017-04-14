@@ -23,8 +23,7 @@ class TopTravelDestinations::Scraper
         destination_info = {
             :description => page.css("#taplc_expanding_read_more_box_0 .content").text.strip,
             :attractions => page.css(".col.attractions li .name").collect {|a| a.text.strip},
-            #:attractions_url => page.css(".navLinks .attractions.twoLines a").attribute("href").value
-            :flight_price => page.css(".flightPrices.wrap .price").text.strip
+            :flight_price => page.css(".flightPrices.wrap .price").text.strip.match(/[$][^$]*/)
         }
     end
 

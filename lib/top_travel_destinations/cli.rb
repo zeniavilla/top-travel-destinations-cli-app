@@ -53,7 +53,7 @@ class TopTravelDestinations::CLI
         puts "Why visit? #{index.description}"
         puts "Don't miss:"
         index.attractions.each.with_index(1) {|attraction, i| puts "#{i}. #{attraction}"}
-        puts "Current lowest airfare: #{index.flight_price}"
+        puts "Current lowest airfare: #{index.flight_price}" unless index.flight_price == nil
         puts "-----------"
     end
 
