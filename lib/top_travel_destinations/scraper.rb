@@ -3,8 +3,8 @@ require 'open-uri'
 
 class TopTravelDestinations::Scraper
 
-    def self.scrape_main_page
-        page = Nokogiri::HTML(open("https://www.tripadvisor.com/TravelersChoice-Destinations-cTop-g1"))
+    def self.scrape_main_page(main_page_url)
+        page = Nokogiri::HTML(open(main_page_url))
         
         destinations = []
 
@@ -25,8 +25,6 @@ class TopTravelDestinations::Scraper
             :attractions => page.css(".col.attractions li .name").collect {|attr| attr.text.strip},
             :attractions_url => "https://www.tripadvisor.com#{page.css(".col.attractions .seeAllLink").attribute("href").value}"
         }
-
-        destination_info[:attractions] << page.css(".col.attractions li .name").each {|attr| attr.text.strip},
     end
 
 end

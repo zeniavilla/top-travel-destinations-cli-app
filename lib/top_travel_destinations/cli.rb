@@ -1,10 +1,25 @@
 class TopTravelDestinations::CLI
+    BASE_PATH = "https://www.tripadvisor.com"
 
     def call
+        create_list
+        #add_attributes_to_dest
         list_destinations
         menu
     end
     
+    def create_list
+        destinations_array = TopTravelDestinations::Scraper.scrape_main_page(BASE_PATH + '/TravelersChoice-Destinations-cTop-g1')
+        TopTravelDestinations::Destination.create_from_collection(destinations_array)
+    end
+
+    # def add_attributes_to_dest
+    #     TopTravelDestinations::Destination.all.each do |destination|
+    #         attributes = TopTravelDestinations::Scraper.scrape_destination_page(destination.destination_url)
+    #         destination.add_attributes(attributes)
+    #     end
+    # end
+
     def list_destinations
         puts "Top Travel Destinations"
         @destinations = TopTravelDestinations::Destination.all
@@ -18,7 +33,7 @@ class TopTravelDestinations::CLI
             input = gets.strip.downcase
             
             if input.to_i.between?(1, 25)
-                destination_details[input.to_i]
+                destination_details[input.to_i - 1][:location]
             elsif input == "display"
                 list_by_continent
             elsif input == "exit"
