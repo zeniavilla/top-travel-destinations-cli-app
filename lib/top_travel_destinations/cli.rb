@@ -3,6 +3,7 @@ class TopTravelDestinations::CLI
 
     def call
         create_list
+        puts "loading..."
         add_attributes_to_dest
         list_destinations
         menu
@@ -22,24 +23,31 @@ class TopTravelDestinations::CLI
     end
 
     def list_destinations
+        puts ""
         puts "Top Travel Destinations"
+        puts "-----------------------"
         @destinations.each.with_index(1) {|destination, i| puts "#{i}. #{destination.location}"}
     end
 
     def menu
         input = ""
         while input != "exit"
-            puts "Enter the number of the destination you'd like to know more about, type display to display by continent, or exit:"
+            puts ""
+            puts "Enter the number of the destination you'd like to know more about, type list for the original list, type display to display by continent, or exit:"
             input = gets.strip.downcase
             
             if input.to_i.between?(1, 25)
                 destination_details(input.to_i - 1)
             elsif input == "display"
                 list_by_continent
+            elsif input == "list"
+                list_destinations
             elsif input == "exit"
-                puts "Goodbye!"
+                puts ""
+                puts "Thank you! Safe travels."
             else
                 puts "Not sure what you mean."
+                puts ""
                 menu
             end 
         end
@@ -63,79 +71,66 @@ class TopTravelDestinations::CLI
         puts "-----------"
     end
 
-    # def list_by_continent
-    #     puts "Africa, Asia, Europe, North America, South America, or Oceania?"
-    #     input = gets.strip
+    def list_by_continent
+        puts "Africa, Asia, Europe, North America, South America, or Oceania?"
+        input = gets.strip
         
-    #     africa = %w(morocco)
-    #     asia = %w(indonesia cambodia thailand vietnam turkey russia united arab emirates nepal)
-    #     europe = %w(united kingdom france italy greece spain czech republic turkey russia)
+        africa = ["Morocco"]
+        asia = ["Indonesia", "Cambodia", "Thailand", "Vietnam", "Turkey", "Russia", "United Arab Emirates", "Nepal"]
+        europe = ["United Kingdom", "France", "Italy", "Greece", "Spain", "Czech Republic", "Turkey", "Russia"]
+        north_america =["New York", "Jamaica", "Bay Islands", "Belize Cayes", "St. Martin", "Mexico", "Cayman Islands"]
+        south_america = ["Brazil", "Peru"]
+        oceania = ["Society Islands"]
 
-    #     case input.downcase
-    #     when "africa"
-    #         @destinations.any? {|destination| puts destination.location if africa.include?(destination)}
-    #         # puts <<-DOC
-    #         # Africa
-    #         # ---------------------
-    #         # 1.Marrakech, Morocco
-    #         # ---------------------
-    #         # DOC
-    #     when "asia"
-    #         puts <<-DOC
-    #         Asia 
-    #         -------------------------------
-    #         1. Bali, Indonesia
-    #         2. Siem Reap, Cambodia
-    #         3. Phuket, Thailand
-    #         4. Hoi An, Vietnam
-    #         5. Istanbul, Turkey
-    #         6. St. Petersburg, Russia
-    #         7. Dubai, United Arab Emirates
-    #         8. Kathmandu, Nepal
-    #         -------------------------------
-    #         DOC
-    #     when "europe"
-    #         puts <<-DOC
-    #         Europe
-    #         --------------------------
-    #         1. London, United Kingdom
-    #         2. Paris, France
-    #         3. Rome, Italy
-    #         4. Crete, Greece
-    #         5. Barcelona, Spain
-    #         6. Prague, Czech Republic
-    #         7. Istanbul, Turkey
-    #         8. St. Petersburg, Russia
-    #         --------------------------
-    #         DOC
-    #     when "north america"
-    #         puts <<-DOC
-    #         North America
-    #         --------------------------------
-    #         1. New York City, New York
-    #         2. Jamaica
-    #         3. Roatan, Bay Islands
-    #         4. Ambergris Caye, Balize Cayes
-    #         5. St. Maarten-St. Martin
-    #         6. Playa del Carmen, Mexico
-    #         7. Grand Cayman, Cayman Islands
-    #         --------------------------------
-    #         DOC
-    #     when "south america"
-    #         puts <<-DOC
-    #         South America
-    #         --------------------------
-    #         1. Rio de Janeiro, Brazil
-    #         2. Cusco, Peru
-    #         --------------------------
-    #         DOC
-    #     when "oceania"
-    #         puts <<-DOC
-    #         Oceania
-    #         1. Bora Bora, Society Islands
-    #         *Technically, the Society Islands are not associated with a continent, but  with the region of Oceania.
-    #         DOC
-    #     end
-    # end
+        case input.strip.downcase
+        when "africa"
+            puts ""
+            puts "        Africa"
+            puts "-----------------------"
+            @destinations.each.with_index(1) do |destination, i| 
+                puts "#{i}. #{destination.location}" if africa.include?(destination.location.split(", ")[1])
+            end
+            puts "-----------------------"
+        when "asia"
+            puts ""
+            puts "             Asia" 
+            puts "---------------------------------"
+            @destinations.each.with_index(1) do |destination, i| 
+                puts "#{i}. #{destination.location}" if asia.include?(destination.location.split(", ")[1])
+            end
+            puts "---------------------------------"
+        when "europe"
+            puts "          Europe"
+            puts "--------------------------"
+            @destinations.each.with_index(1) do |destination, i| 
+                puts "#{i}. #{destination.location}" if europe.include?(destination.location.split(", ")[1])
+            end
+            puts "--------------------------"
+        when "north america"
+            puts "          North America"
+            puts "--------------------------------"
+            @destinations.each.with_index(1) do |destination, i| 
+                array_size = destination.location.split(/, |-/).length
+                if north_america.include?(destination.location.split(/, |-/)[array_size - 1])
+                    puts "#{i}. #{destination.location}"
+                end
+                
+            end
+            puts "--------------------------------"
+        when "south america"
+            puts "South America"
+            puts "----------------------------"
+            @destinations.each.with_index(1) do |destination, i| 
+                puts "#{i}. #{destination.location}" if south_america.include?(destination.location.split(", ")[1])
+            end
+            puts "----------------------------"
+        when "oceania"
+            puts "Oceania"
+            @destinations.each.with_index(1) do |destination, i| 
+                puts "#{i}. #{destination.location}" if oceania.include?(destination.location.split(", ")[1])
+            end
+            puts "*Technically, the Society Islands are not associated with a continent, but  with the region of Oceania."
+        end
+    end
 
 end
