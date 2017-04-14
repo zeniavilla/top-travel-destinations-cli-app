@@ -3,7 +3,7 @@ class TopTravelDestinations::CLI
 
     def call
         create_list
-        #add_attributes_to_dest
+        add_attributes_to_dest
         list_destinations
         menu
     end
@@ -13,16 +13,17 @@ class TopTravelDestinations::CLI
         TopTravelDestinations::Destination.create_from_collection(destinations_array)
     end
 
-    # def add_attributes_to_dest
-    #     TopTravelDestinations::Destination.all.each do |destination|
-    #         attributes = TopTravelDestinations::Scraper.scrape_destination_page(destination.destination_url)
-    #         destination.add_attributes(attributes)
-    #     end
-    # end
+    def add_attributes_to_dest
+        @destinations = TopTravelDestinations::Destination.all
+        @destinations.each do |destination|
+            attributes = TopTravelDestinations::Scraper.scrape_destination_page(destination.destination_url)
+            destination.add_attributes(attributes)
+        end
+    end
 
     def list_destinations
         puts "Top Travel Destinations"
-        @destinations = TopTravelDestinations::Destination.all
+        
         @destinations.each.with_index(1) {|destination, i| puts "#{i}. #{destination.location}"}
     end
 
