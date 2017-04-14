@@ -7,9 +7,8 @@ class TopTravelDestinations::CLI
     
     def list_destinations
         puts "Top Travel Destinations"
-        destination_hash = TopTravelDestinations::Scraper.scrape_page
-        @destinations = TopTravelDestinations::Destination.new(destination_hash).all
-        @destinations.each_with_index(1) {|destination, index| puts "#{index}. #{destination.location}"}
+        @destinations = TopTravelDestinations::Destination.all
+        @destinations.each.with_index(1) {|destination, i| puts "#{i}. #{destination.location}"}
     end
 
     def menu
