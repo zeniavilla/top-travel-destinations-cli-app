@@ -55,23 +55,27 @@ class TopTravelDestinations::CLI
 
     def destination_details(input)
         index = @destinations[input]
+        puts ""
         puts index.location
-        puts "---"
-        puts "Why visit? #{index.description}"
+        puts ""
+        puts "Why visit?"
+        puts index.description
         puts "http://www.visitgreece.gr/en/greek_islands/crete" if index.description == ""
-        puts "---" unless index.description == ""
+        puts "" unless index.description == ""
         puts "Don't miss:" unless index.attractions == []
         index.attractions.each.with_index(1) {|attraction, i| puts "    #{i}. #{attraction}"}
+        puts "" unless index.flight_price == nil
         puts "Current lowest airfare: #{index.flight_price}" unless index.flight_price == nil
         if index.weather_high != ""
+            puts ""
             puts "Current local weather:"
-            puts "    High: #{index.weather_high.match(/[^°]*/)}°"
-            puts "    Low: #{index.weather_low.match(/[^°]*/)}°"
+            puts "   High: #{index.weather_high.match(/[^°]*/)}°"
+            puts "   Low: #{index.weather_low.match(/[^°]*/)}°"
         end
-        puts "-----------"
     end
 
     def list_by_continent
+        puts ""
         puts "Africa, Asia, Europe, North America, South America, or Oceania?"
         input = gets.strip
         
@@ -100,24 +104,26 @@ class TopTravelDestinations::CLI
             end
             puts "---------------------------------"
         when "europe"
+            puts ""
             puts "          Europe"
-            puts "--------------------------"
+            puts "---------------------------"
             @destinations.each.with_index(1) do |destination, i| 
                 puts "#{i}. #{destination.location}" if europe.include?(destination.location.split(", ")[1])
             end
-            puts "--------------------------"
+            puts "---------------------------"
         when "north america"
-            puts "          North America"
-            puts "--------------------------------"
+            puts ""
+            puts "           North America"
+            puts "----------------------------------"
             @destinations.each.with_index(1) do |destination, i| 
                 array_size = destination.location.split(/, |-/).length
                 if north_america.include?(destination.location.split(/, |-/)[array_size - 1])
                     puts "#{i}. #{destination.location}"
                 end
-                
             end
-            puts "--------------------------------"
+            puts "----------------------------------"
         when "south america"
+            puts ""
             puts "South America"
             puts "----------------------------"
             @destinations.each.with_index(1) do |destination, i| 
@@ -125,10 +131,13 @@ class TopTravelDestinations::CLI
             end
             puts "----------------------------"
         when "oceania"
-            puts "Oceania"
+            puts ""
+            puts "            Oceania"
+            puts "--------------------------------"
             @destinations.each.with_index(1) do |destination, i| 
                 puts "#{i}. #{destination.location}" if oceania.include?(destination.location.split(", ")[1])
             end
+            puts "--------------------------------"
             puts "*Technically, the Society Islands are not associated with a continent, but  with the region of Oceania."
         end
     end
