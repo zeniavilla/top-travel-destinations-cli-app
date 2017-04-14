@@ -50,8 +50,9 @@ class TopTravelDestinations::CLI
         puts index.location
         puts "---"
         puts "Why visit? #{index.description}"
-        puts "---"
-        puts "Don't miss:"
+        puts "http://www.visitgreece.gr/en/greek_islands/crete" if index.description == ""
+        puts "---" unless index.description == ""
+        puts "Don't miss:" unless index.attractions == []
         index.attractions.each.with_index(1) {|attraction, i| puts "    #{i}. #{attraction}"}
         puts "Current lowest airfare: #{index.flight_price}" unless index.flight_price == nil
         if index.weather_high != ""
