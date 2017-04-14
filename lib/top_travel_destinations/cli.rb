@@ -7,7 +7,8 @@ class TopTravelDestinations::CLI
     
     def list_destinations
         puts "Top Travel Destinations"
-        @destinations = TopTravelDestinations::Destination.all
+        destination_hash = TopTravelDestinations::Scraper.scrape_page
+        @destinations = TopTravelDestinations::Destination.new(destination_hash).all
         @destinations.each_with_index(1) {|destination, index| puts "#{index}. #{destination.location}"}
     end
 
