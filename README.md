@@ -10,7 +10,7 @@ This Ruby Gem provides a CLI to view the top 25 travel destinations per Tripadvi
 
 Type the below line into your terminal and follow the on-screen prompts.
 
-$ top-travel-destinations
+    $ top-travel-destinations
 
 ## Development
 
