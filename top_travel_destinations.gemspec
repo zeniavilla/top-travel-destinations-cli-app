@@ -8,32 +8,18 @@ Gem::Specification.new do |spec|
   spec.version       = TopTravelDestinations::VERSION
   spec.authors       = ["Zenia Villa"]
   spec.email         = ["zavilla90@gmail.com"]
-  spec.files         = ["lib/top_travel_destinations.rb", "lib/top_travel_destinations/cli.rb", "lib/top_travel_destinations/scraper.rb," "lib/top_travel_destinations/destination.rb"]
+  spec.files         = ["lib/top_travel_destinations.rb", "lib/top_travel_destinations/cli.rb", "lib/top_travel_destinations/scraper.rb," "config/environment.rb"]
   spec.summary       = "Top Travel Destinations"
   spec.description   = "Provides details on Tripadvisor's Top 25 Travel Destinations"
   spec.homepage      = "https://github.com/zeniavilla/top-travel-destinations-cli-app"
   spec.license       = "MIT"
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
-  end
-
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
-  end
   spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  spec.executables   = ["top-travel-destinations"]
+  spec.require_paths = ["lib", "lib/top_travel_destinations"]
 
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "pry", ">=0"
-
-  spec.add_development_dependency "nokogiri", ">=0"
+  spec.add_development_dependency "pry"
+  spec.add_development_dependency "nokogiri"
 end

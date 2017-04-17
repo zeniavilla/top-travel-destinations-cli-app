@@ -1,28 +1,16 @@
-# TopTravelDestinations
+# Top Travel Destinations
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/top_travel_destinations`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This Ruby Gem provides a CLI to view the top 25 travel destinations per Tripadvisor's 2017 Traveler's Choice Awards.
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'top_travel_destinations'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
 
     $ gem install top_travel_destinations
 
 ## Usage
 
-TODO: Write usage instructions here
+Type the below line into your terminal and follow the on-screen prompts.
+
+$ top-travel-destinations
 
 ## Development
 
