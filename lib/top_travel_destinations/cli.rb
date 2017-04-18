@@ -2,30 +2,23 @@ class TopTravelDestinations::CLI
 
     def call
         create_list
-        puts "\nloading..."
-        add_attributes_to_dest
         list_destinations
         menu
     end
     
     def create_list
-        destinations_array = TopTravelDestinations::Scraper.scrape_main_page('https://www.tripadvisor.com/TravelersChoice-Destinations-cTop-g1')
-        TopTravelDestinations::Destination.create_from_collection(destinations_array)
+        TopTravelDestinations::Scraper.scrape_main_page('https://www.tripadvisor.com/TravelersChoice-Destinations-cTop-g1')
     end
 
-    def add_attributes_to_dest
-        @destinations = TopTravelDestinations::Destination.all
-        @destinations.each do |destination|
-            attributes = TopTravelDestinations::Scraper.scrape_destination_page(destination.destination_url)
-            destination.add_attributes(attributes)
-        end
+    def add_attributes_to_destination(destination)
+        attributes = TopTravelDestinations::Scraper.scrape_destination_page(destination.destination_url)
+        destination.add_attributes(attributes)
     end
 
     def list_destinations
-        puts ""
-        puts "Top Travel Destinations"
+        puts "\nTop Travel Destinations"
         puts "-----------------------"
-        @destinations.each.with_index(1) {|destination, i| puts "#{i}. #{destination.location}"}
+        TopTravelDestinations::Destination.all.each.with_index(1) {|destination, i| puts "#{i}. #{destination.location}"}
     end
 
     def menu
@@ -35,13 +28,16 @@ class TopTravelDestinations::CLI
             input = gets.strip.downcase
             
             if input.to_i.between?(1, 25)
-                destination_details(input.to_i - 1)
+                destination = TopTravelDestinations::Destination.all[input.to_i - 1]
+                add_attributes_to_destination(destination)
+                destination_details(destination)
             elsif input == "display"
                 list_by_continent
             elsif input == "list"
                 list_destinations
             elsif input == "exit"
                 puts "\nThanks for using Top Travel Destinations! Safe travels.\n"
+                break
             else
                 puts "\nNot sure what you mean.\n"
                 menu
@@ -49,20 +45,18 @@ class TopTravelDestinations::CLI
         end
     end
 
-    def destination_details(input)
-        index = @destinations[input]
-
-        puts "\n#{index.location}\n"
+    def destination_details(destination)
+        puts "\n#{destination.location}\n"
         puts "\nWhy visit?"
-        puts "\n#{index.description}"
-        puts "http://www.visitgreece.gr/en/greek_islands/crete" if index.description.nil?
-        puts "\nDon't miss:" unless index.attractions == []
-        index.attractions.each.with_index(1) {|attraction, i| puts "    #{i}. #{attraction}"}
-        puts "\nCurrent lowest airfare: #{index.flight_price}" unless index.flight_price == nil
-        if index.weather_high != ""
+        puts "\n#{destination.description}"
+        puts "http://www.visitgreece.gr/en/greek_islands/crete" if destination.description.nil?
+        puts "\nDon't miss:" unless destination.attractions == []
+        destination.attractions.each.with_index(1) {|attraction, i| puts "    #{i}. #{attraction}"}
+        puts "\nCurrent lowest airfare: #{destination.flight_price}" unless destination.flight_price == nil
+        if destination.weather_high != ""
             puts "\nCurrent local weather:"
-            puts "   High: #{index.weather_high.match(/[^°]*/)}°"
-            puts "   Low: #{index.weather_low.match(/[^°]*/)}°"
+            puts "   High: #{destination.weather_high.match(/[^°]*/)}°"
+            puts "   Low: #{destination.weather_low.match(/[^°]*/)}°"
         end
     end
 
@@ -73,8 +67,8 @@ class TopTravelDestinations::CLI
             puts "\n#{continent_input.split(" ").map {|word| word.capitalize}.join(" ")
 }"
             puts "----------------------------------"
-            africa_destinations = TopTravelDestinations::Destination.find_by_continent(continent_input)
-            africa_destinations.each do |destination| 
+            destinations = TopTravelDestinations::Destination.find_by_continent(continent_input)
+            destinations.each do |destination| 
                 puts "#{TopTravelDestinations::Destination.all.find_index(destination) + 1}. #{destination.location}"
             end
             puts "----------------------------------"

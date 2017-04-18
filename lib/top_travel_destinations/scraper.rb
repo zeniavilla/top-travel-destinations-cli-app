@@ -12,6 +12,7 @@ class TopTravelDestinations::Scraper
                 :destination_url => "https://www.tripadvisor.com#{destination.attribute("href").value}"
             }
         end
+        TopTravelDestinations::Destination.create_from_collection(destinations)
     end
 
     def self.scrape_destination_page(destination_url)
