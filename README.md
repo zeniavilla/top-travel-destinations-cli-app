@@ -4,7 +4,7 @@ This Ruby Gem provides a CLI to view the top 25 travel destinations per Tripadvi
 
 ## Installation
 
-    $ gem install top_travel_destinations
+    $ gem install top-travel-destinations
 
 ## Usage
 
