@@ -8,7 +8,7 @@ This Ruby Gem provides a CLI to view the top 25 travel destinations per Tripadvi
 
 ## Usage
 
-Type the below line into your terminal and follow the on-screen prompts.
+Type the line below into your terminal and follow the on-screen prompts.
 
     $ top-travel-destinations
 
@@ -20,7 +20,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/zeniavilla/top_travel_destinations. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/zeniavilla/top-travel-destinations-cli-app. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
